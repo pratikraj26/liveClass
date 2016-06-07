@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="takhshila">
+<head>
+	<title>Takhshila | Keep Learning</title>
+	<script>document.write('<base href="' + document.location + '" />');</script>
+	<!-- Load app css files -->
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="bower_components/angular-material/angular-material.css.css">
+	<link rel="stylesheet" href="/css/style.css">
+
+	<!-- Load the socket client file -->
+	<script src="/socket.io/socket.io.js"></script>
+
+	<!-- Load angular material dependencies files -->
+  <script src="bower_components/angular/angular.min.js"></script>
+	<script src="bower_components/angular-material/angular-material.min.js"></script>
+	<script src="bower_components/angular-aria/angular-aria.min.js"></script>
+
+  <!-- Load angular material -->
+  <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+
+	<!-- Load app files -->
+	<script src="main.js"></script>
+	<!-- <script src="/js/controllers.js"></script>
+	<script src="/js/directive.js"></script>
+	<script src="/js/socketFactory.js"></script>
+	<script src="/js/factory.js"></script>
+	<script src="/js/service.js"></script> -->
+</head>
+<body ng-controller="MainCtrl">
+	<div ng-include src = "'/views/header.html'"></div>
+	<main class="main" role="main">
+		<div ng-view class="flex"></div>
+	</main>
+	<div ng-include src = "'/views/footer.html'"></div>
+	<div class = "col-md-4 col-sm-12 col-xs-12">
+	</div>
+</body>
+</html>
