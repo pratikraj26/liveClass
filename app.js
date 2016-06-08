@@ -2,12 +2,9 @@ var express = require('express'),
     app = express(),
     server = require('http').createServer(app),
     io = require('socket.io').listen(server),
-    mongoose = require('mongoose');
-
-server.listen(3000, function(err){
-  if(err) throw err;
-  console.log("Server listening on port 3000");
-});
+    mongoose = require('mongoose'),
+    authorize = require('./authorize'),
+    online_users = [];
 
 mongoose.connect('mongodb://localhost/liveclass', function(err){
   if(err){
@@ -49,6 +46,7 @@ var userSchema = mongoose.Schema({
 var userSession = mongoose.Schema({
   user_id: String,
   token: String,
+  socket: mongoose.Schema.Types.Mixed,
   device_id: String,
   logged_in_on: {
     type: Date,
@@ -56,12 +54,32 @@ var userSession = mongoose.Schema({
   }
 });
 
+var userClasses = mongoose.Schema({
+  student_id: String,
+  teacher_id: String,
+  class_on: {
+    type: Date,
+  },
+  booked_on: {
+    type: Date,
+    Default: Date.now
+  }
+});
+
+app.get('/views/*', authorize.validateRequest);
+
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
 app.use(express.static(__dirname + '/public'));
 
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/public/index.html');
+app.get('/*', function(req, res){
+  res.sendFile('index.html', { root: __dirname +'/public' });
 });
-app.use('/*', function(req, res){
-  res.sendFile(__dirname + '/public/404.html');
+
+io.on('connection', function(client){
+
+});
+
+server.listen(3000, function(err){
+  if(err) throw err;
+  console.log("Server listening on port 3000");
 });
